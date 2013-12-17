@@ -1,0 +1,2 @@
+// forbid the .dat files. may contain sensitive data
+*.dat
