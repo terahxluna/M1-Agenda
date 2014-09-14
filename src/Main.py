@@ -4,6 +4,8 @@ from GoogleAgendaServiceBuilder import BuildGoogleAgendaService
 import GlobalSettings
 from CamsiCourseParser import CamsiCourseParser
 from CamsiCourseToGoogleAgendaConverter import CamsiCourseToGoogleAgendaConverter
+import argparse
+from oauth2client import tools
 
 __author__ = 'Mattijs Korpershoek'
 
@@ -12,15 +14,18 @@ timeZone = GlobalSettings.GoogleCalendarSettings['timeZone']
 planningUrl = GlobalSettings.CamsiWebSettings['planningUrl']
 localFileName = GlobalSettings.CamsiWebSettings['localFileName']
 
+parser = argparse.ArgumentParser(parents=[tools.argparser])
+flags = parser.parse_args()
+
 print '[*] Program started with following settings:'
 GlobalSettings.printSettings()
 
-service = BuildGoogleAgendaService()
+service = BuildGoogleAgendaService(flags)
 calendarUtils = GoogleAgendaCalendarUtils(service)
 myCalendar = calendarUtils.getCalendarIfAlreadyExists(calendarName)
 
 if calendarUtils.isValidCalendar(myCalendar):
-    print 'Calender', calendarName, 'already exists! Clearing it ...'
+    print 'Calendar', calendarName, 'already exists! Clearing it ...'
     numberOfItemsCleared = calendarUtils.deleteAllEventsFromCalendar(myCalendar)
     print '[-] Deleted', numberOfItemsCleared, 'item(s) from', calendarName, 'calendar'
 else:
@@ -33,8 +38,7 @@ urllib.urlretrieve(planningUrl, localFileName)
 print '[*] Planning file saved as', localFileName
 
 print '[*] Parsing', localFileName, '...'
-camsiCourseParser = CamsiCourseParser()
-camsiCourseParser.setParseContent(localFileName)
+camsiCourseParser = CamsiCourseParser(localFileName)
 camsiCourseParser.parse()
 print '[*] Parsing', localFileName, ': DONE'
 

@@ -63,14 +63,14 @@ class CamsiCourseToGoogleAgendaConverter:
     def getLocation(self, camsiCourse):
         return self.fixEncodingProblems(camsiCourse.content['location'])
 
+    def getDescription(self, camsiCourse):
+        return self.fixEncodingProblems(camsiCourse.content['desc'])
+
     def getTitle(self, camsiCourse):
         return self.fixEncodingProblems(camsiCourse.content['courseName'])
 
     def isValidDate(self, camsiCourse):
         return camsiCourse.content['date'] != 'Date'
-
-    def getDescription(self, camsiCourse):
-        return self.fixEncodingProblems(camsiCourse.content['teacherName'])
 
     def fixEncodingProblems(self, string):
         result = re.sub('é', 'e', string)

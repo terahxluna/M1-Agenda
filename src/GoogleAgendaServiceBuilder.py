@@ -1,14 +1,14 @@
 __author__ = 'Mattijs Korpershoek'
 
 
-def BuildGoogleAgendaService():
+def BuildGoogleAgendaService(flags):
     import gflags
     import httplib2
 
     from apiclient.discovery import build
     from oauth2client.file import Storage
     from oauth2client.client import OAuth2WebServerFlow
-    from oauth2client.tools import run
+    from oauth2client.tools import run_flow
 
     FLAGS = gflags.FLAGS
 
@@ -20,10 +20,10 @@ def BuildGoogleAgendaService():
     # The client_id and client_secret are copied from the API Access tab on
     # the Google APIs Console
     FLOW = OAuth2WebServerFlow(
-        client_id='350070024037-suugugrn6lci32fug70e568467lnu45g.apps.googleusercontent.com',
-        client_secret='3eP_N2sNCVPikOx3UFNHcHZ5',
+        client_id='****',
+        client_secret='****',
         scope='https://www.googleapis.com/auth/calendar',
-        user_agent='CamsiGcal/0.1')
+        user_agent='M1Agenda/0.1')
 
     # To disable the local server feature, uncomment the following line:
     FLAGS.auth_local_webserver = False
@@ -34,7 +34,7 @@ def BuildGoogleAgendaService():
     storage = Storage('calendar.dat')
     credentials = storage.get()
     if credentials is None or credentials.invalid:
-        credentials = run(FLOW, storage)
+        credentials = run_flow(FLOW, storage, flags)
 
     # Create an httplib2.Http object to handle our HTTP requests and authorize it
     # with our good Credentials.
@@ -45,7 +45,7 @@ def BuildGoogleAgendaService():
     # the Google APIs Console
     # to get a developerKey for your own application.
     service = build(serviceName='calendar', version='v3', http=http,
-                    developerKey='AIzaSyA6c9tO_KriDddGr2roAzKZhZ7AwORz1Ko')
+                    developerKey='****')
 
     return service
 

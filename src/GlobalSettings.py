@@ -1,12 +1,12 @@
 __author__ = 'Mattijs Korpershoek'
 
 GoogleCalendarSettings = {
-    'calendarName': 'Camsi',
+    'calendarName': 'M1 G5.1',
     'timeZone': 'Europe/Paris',
 }
 
 CamsiWebSettings = {
-    'planningUrl': 'http://planning.camsi.fr/ShowListeCreneaux.aspx',
+    'planningUrl': 'https://celcatfsi.ups-tlse.fr/FSIpargroupes/g776.xml',
     'localFileName': 'planning.xml'
 }
 
