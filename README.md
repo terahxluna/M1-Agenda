@@ -6,4 +6,6 @@ into Google Agenda.
 
 Based on [CAMSI-Agenda](https://github.com/Makohoek/CAMSI-Agenda)
 
+Uses Python 2 with Google Python API
+
 
